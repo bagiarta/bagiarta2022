@@ -1,3 +1,14 @@
+<?php
+$conn = mysqli_connect('localhost', 'root', '', 'finch_db');
+
+$result = mysqli_query($conn, "SELECT * FROM item_mst");
+
+$items = [];
+while ($item = mysqli_fetch_assoc($result)) {
+    $items[] = $item;
+}
+$itm_mst = $items;
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,20 +31,24 @@
             <th>last_update_dt</th>
             <th>action</th>
         </tr>
+        <?php
+        $i = 1;
+        foreach ($itm_mst as $itm) : ?>
         <tr>
-            <?php
-            $i = 1; ?>
-            <td><?= $i++; ?></td>
-            <td>laserjet</td>
-            <td>laserjet P1102</td>
-            <td>output device</td>
-            <td>white</td>
-            <td></td>
+
+            <td><?= $i++ ?></td>
+            <td><?= $itm["itm_name"]; ?></td>
+            <td><?= $itm["itm_desc"]; ?></td>
+            <td><?= $itm["itm_type"]; ?></td>
+            <td><?= $itm["color"]; ?></td>
+            <td><?= $itm["last_update_dt"]; ?></td>
             <td>
                 <a href="">Edit</a> | <a href="">delete</a>
             </td>
     </table>
     </tr>
+    <?php endforeach; ?>
+
 </body>
 
 </html>
